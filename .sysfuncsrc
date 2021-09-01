@@ -1,0 +1,77 @@
+#!/bin/bash
+# -------------------------------------------------
+#
+#            System functions file
+#
+#           Written: James Varoutsos 
+#   Date: 25-Aug-2021        Version: 1.0
+#
+#   1.0 - Initial (Added Zippy)
+#
+# ------------------------------------------------- 
+
+#
+#   Function lister - It lists functions!
+#
+function listSysFuncs {
+    echo -e "zp - zp|zippy [file/dir] [type]\n\tAuto-generates an archive of a given directory"
+    echo -e "unzp - unzp|unzippy [file/dir]\n\tDetects the type, them performs an extraction of a given archive"
+}
+
+function archiveAuto {
+    if [ -z "$2" ]; then
+        typeLower=$(echo $2 | tr '[:upper:]' '[:lower:]')
+    else       
+        echo "No type given"
+        return 1
+    fi
+    if [ -d "$1" ]; then
+        case $2 in
+            zip)
+                zip -r $(basename $1).zip $1
+                ;;
+            bz|bzip|bz2|tbz)
+                tar -jcvf $(basename $1).tar.bz2 $1
+                ;;
+            gz|gzip|gz|tgz)
+                tar -zcvf $(basename $1).tar.gz $1  
+                ;;
+            tar|tz)
+                tar -cvf $(basename $1).tar.gz $1
+                ;;
+            *)
+                echo "Unknown type ($1)"
+        esac
+    else
+        echo "$1 is an invalid directory"
+    fi
+}
+
+alias zp="archiveAuto"
+alias zippy="archiveAuto"
+
+function extractAuto {
+    if [ -f $1 ]; then
+        case $2 in
+            *.zip)
+                unzip -r $1
+                ;;
+            *.bz|*.bzip|*.bz2|*.tbz)
+                tar -jcvf $1
+                ;;
+            *.gz|*.gzip|*.gz|*.tgz)
+                tar -zxvf $1     
+                ;;
+            *.tar|*.tz)
+                tar -xvf $1
+                ;;
+            *)
+                echo "Unknown archive type, skipped ($1)"
+        esac
+    else
+        echo "Unable to find file $1"
+    fi
+}
+
+alias unzp="extractAuto"
+alias unzippy="extractAuto"
