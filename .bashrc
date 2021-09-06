@@ -59,14 +59,11 @@ if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
 
-# Source network functions definitions
-if [ -f ~/.netfuncsrc ]; then
-    source ~/.netfuncsrc
-fi
-
-# Source system functions definitions
-if [ -f ~/.netfuncsrc ]; then
-    source ~/.netfuncsrc
+# Load in all related function files
+if [ -d ~/shellfuncs ]; then
+    for sfile in ~/shellfuncs/.*funcsrc; do
+        source $sfile
+    done
 fi
 
 # Term-friendly hash shortcuts
