@@ -1,32 +1,33 @@
 
-# Enable line numbering
+" Enable line numbering
 set number
 
-# Enable syntax highlighting
+" Enable syntax highlighting
 syntax enable
 
-# Enable looooong history
+" Enable looooong history
 set history=1000
 
-# Enable dark-mode coloring
+" Enable dark-mode coloring
 set background=dark
 
-# Shut up the ding-ing
+" Shut up the ding-ing
 set noerrorbells
 
-# Match existing file identation style
+" Match existing file identation style
 set autoindent
 
-# Enable search highlighting
+" Enable search highlighting
 set hlsearch
 
-# Disable case-sensitivity
+" Disable case-sensitivity
 set ignorecase
 
-# Line wrapping options
+" Line wrapping options
 set wrap
 set linebreak
 
-# Temporary vim file storage
-set dir=~/.vim/swap			# Swap
-set backupdir=~/.vim/cack	# Cache
+" Temporary vim file storage
+set dir=~/.vim/swap			    " Swap
+set backupdir=~/.vim/cache	    " Cache
+set viminfo+=n~/.vim/viminfo    " Viminfo
