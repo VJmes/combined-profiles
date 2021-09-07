@@ -96,6 +96,11 @@ alias dfj="df -h"
 alias hist="history"
 alias ghist="history | grep --color=auto"
 
+# Systemd aliases
+alias sls="systemctl list-unit-files --type=service"
+alias jsl="journalctl -eo short-iso --no-pager"
+alias jsf="journalctl -feo short-iso --no-pager"
+
 # Checksum aliases
 alias md5y="echo -n $1 | md5sum | cut -f 1 -d ' '"
 
