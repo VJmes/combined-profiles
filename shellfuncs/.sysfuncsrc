@@ -16,6 +16,8 @@
 function listSysFuncs {
     echo -e "zp - zp|zippy [file/dir] [type]\n\tAuto-generates an archive of a given directory"
     echo -e "unzp - unzp|unzippy [file/dir]\n\tDetects the type, them performs an extraction of a given archive"
+    echo -e "updateEnv - updateEnv|updateProfile\n\tPulls the latest updates for this profile & reloads it"
+    echo -e "reloadEnv - reloadEnv|reloadProfile\n\tReloads the profile"
 }
 
 function archiveAuto {
@@ -75,3 +77,20 @@ function extractAuto {
 
 alias unzp="extractAuto"
 alias unzippy="extractAuto"
+
+function updateEnv {
+    [ -d "$HOME/combined-profiles/" ] && rm -rf "$HOME/combined-profiles/"
+    git clone --quiet --recurse-submodules "https://github.com/VJmes/combined-profiles.git"
+    find "$HOME/combined-profiles/" \( -name ".git" -o -name ".gitignore" -o -name "README.md" -o -name ".gitmodules" \) -exec rm -rf {} +
+    rsync -qav --progress "$HOME/combined-profiles/" "$HOME/"
+    . $HOME/.bashrc
+}
+
+alias updateEnvironment="updateEnv"
+alias updateProfile="updateEnv"
+
+alias reloadEnv=". $HOME/.bashrc"
+alias reloadProfile=". $HOME/.bashrc"
+alias reloadEnvironment=". $HOME/.bashrc"
+
+echo -e "$TC_GOOD Loaded SysFuncs ($HOME/.shellfuncs/.sysfuncsrc) successfully"

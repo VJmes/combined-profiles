@@ -29,6 +29,13 @@ function showColors {
     done; echo
 }
 
+# Handy terminal output macros
+TC_RESET='\033[0m'	    # Reset Color
+TC_ERROR='\033[1;31m[ERROR]\033[0m'	    # Error Red
+TC_WARN='\033[1;33m[WARN]\033[0m'	    # Warn Yellow
+TC_GOOD='\033[1;32m[GOOD]\033[0m'	    # Green Good
+TC_NOTICE='\033[1;36m[NOTICE]\033[0m'	# Notice Blue
+
 # Check if pureline is cloned anywhere
 if [[ -d "$HOME/pureline" ]]; then
     PURE_PATH="$HOME/pureline"
