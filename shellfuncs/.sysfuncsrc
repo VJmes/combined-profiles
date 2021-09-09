@@ -78,19 +78,23 @@ function extractAuto {
 alias unzp="extractAuto"
 alias unzippy="extractAuto"
 
+alias reloadEnv=". $HOME/.bashrc"
+alias reloadProfile=". $HOME/.bashrc"
+alias reloadEnvironment=". $HOME/.bashrc"
+
 function updateEnv {
+    echo -e "$TC_NOTICE Fetching & reloading entire profile"
     [ -d "$HOME/combined-profiles/" ] && rm -rf "$HOME/combined-profiles/"
-    git clone --quiet --recurse-submodules "https://github.com/VJmes/combined-profiles.git"
+    git clone --quiet --recurse-submodules "https://github.com/VJmes/combined-profiles.git" \
+        && echo -e "$TC_GOOD Combined profile repository successfully fetched"
     find "$HOME/combined-profiles/" \( -name ".git" -o -name ".gitignore" -o -name "README.md" -o -name ".gitmodules" \) -exec rm -rf {} +
-    rsync -qav --progress "$HOME/combined-profiles/" "$HOME/"
-    . $HOME/.bashrc
+    rsync -qav --progress "$HOME/combined-profiles/" "$HOME/" \
+        && echo -e "$TC_GOOD Profile refreshed"
+    sleep 2
+    reloadEnv
 }
 
 alias updateEnvironment="updateEnv"
 alias updateProfile="updateEnv"
-
-alias reloadEnv=". $HOME/.bashrc"
-alias reloadProfile=". $HOME/.bashrc"
-alias reloadEnvironment=". $HOME/.bashrc"
 
 echo -e "$TC_GOOD Loaded SysFuncs ($HOME/.shellfuncs/.sysfuncsrc) successfully"
