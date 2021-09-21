@@ -21,6 +21,7 @@ TC_ERROR='\033[1;31m[ERROR]\033[0m'	    # Error Red
 TC_WARN='\033[1;33m[WARN]\033[0m'	    # Warn Yellow
 TC_GOOD='\033[1;32m[GOOD]\033[0m'	    # Green Good
 TC_NOTICE='\033[1;36m[NOTICE]\033[0m'	# Notice Blue
+TC_ALERT='\033[1;35m[NOTICE]\033[0m'	# Alert Purple
 
 # Set pre-program aliases
 if [ -f /usr/bin/python3 ]; then
@@ -112,6 +113,7 @@ alias dfj="df -h"
 alias hist="history"
 alias ghist="history | grep --color=auto"
 alias please="sudo !!"
+alias dsk="df -h -x tmpfs -x devtmpfs"
 
 # Systemd aliases
 alias sls="systemctl list-unit-files --type=service"
