@@ -97,4 +97,4 @@ function updateEnv {
 alias updateEnvironment="updateEnv"
 alias updateProfile="updateEnv"
 
-echo -e "$TC_GOOD Loaded SysFuncs ($HOME/.shellfuncs/.sysfuncsrc) successfully"
+echo -e "$TC_GOOD Loaded sysFuncs module ($HOME/.shellfuncs/.sysfuncsrc)"

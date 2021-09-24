@@ -32,7 +32,7 @@ alias queryLanIP="ip route get 1.1.1.1 | cut -d ' ' -f 7 | head -1"
 function queryWanIP {
     checkUrl="http://checkip.dyndns.com/"
     wanIP=$(curl -s $checkUrl | grep -oE "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}")
-    wanZone=$(dig -x $wanIP +short | cut -d . -f 5- | sed 's/.$//')
+    wanZone=$(dig -x $wanIP +short | sed 's/.$//')
     echo "$wanIP ($wanZone)"
 }
 
@@ -98,4 +98,4 @@ function cleanClone {
 
 alias gitClean="cleanClone"
 
-echo -e "$TC_GOOD Loaded NetFuncs ($HOME/.shellfuncs/.netfuncsrc) successfully"
+echo -e "$TC_GOOD Loaded netfuncs module ($HOME/.shellfuncs/.netfuncsrc)"
