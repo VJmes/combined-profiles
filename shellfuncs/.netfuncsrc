@@ -3,13 +3,13 @@
 #
 #           Network functions file
 #
-#           Written: James Varoutsos 
+#           Written: James Varoutsos
 #   Date: 19-Aug-2021        Version: 1.1
 #
 #   1.0 - Initial (Added bulk-DNS)
 #   1.1 - Added cleanClone
 #
-# ------------------------------------------------- 
+# -------------------------------------------------
 
 #
 #   Function lister - It lists functions!
