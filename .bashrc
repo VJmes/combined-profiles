@@ -3,14 +3,14 @@
 #
 #       James' Excellent Bash Profile
 #
-#           Written: James Varoutsos 
+#           Written: James Varoutsos
 #   Date: 1-Aug-2021        Version: 1.1
 #
 #   1.1 - Added pureline (bash) into profile
 #   1.2 - Multiple logic fixes
 #   1.3 - Added md5|sha|base64 shortcuts
 #
-# ------------------------------------------------- 
+# -------------------------------------------------
 
 unset PS1           # To enable safe-swapping between shells
 unset PURE_PATH     # Fixes edge-case where pureline dir gets scrubbed
@@ -24,8 +24,15 @@ TC_NOTICE='\033[1;36m[NOTICE]\033[0m'	# Notice Blue
 TC_ALERT='\033[1;35m[NOTICE]\033[0m'	# Alert Purple
 
 # Set pre-program aliases
-if [ -f /usr/bin/python3 ]; then
+if [ -f /usr/bin/python3.9 ]; then
+    alias python="python3.9"
+    alias pip="pip3.9"
+    alias py="python3.9"
+elif [ -f /usr/bin/python3 ]; then  #Fallback
+    echo -ne "$TC_WARN Loading non-optimal python version"
+    echo -e " (\033[1;36m$(/usr/bin/python3 -V | cut -d ' ' -f 2)\033[0m)"
     alias python="python3"
+    alias pip="pip3"
     alias py="python3"
 fi
 
@@ -59,7 +66,7 @@ else
 fi
 
 # For anything that isn't linux term & if pureline has been found
-if [ "$TERM" != "linux" ] && [[ -n "${PURE_PATH+x}" ]]; then 
+if [ "$TERM" != "linux" ] && [[ -n "${PURE_PATH+x}" ]]; then
     # Use pureline to set PS1 if it exists
     if [ -f ~/.purelinerc ]; then
         source "$HOME"/pureline/pureline "$HOME"/.purelinerc
@@ -78,8 +85,14 @@ fi
 
 # Load in all related function files
 if [ -d ~/shellfuncs ]; then
-    for sfile in ~/shellfuncs/.*funcsrc; do
-        source $sfile
+    for funcPath in ~/shellfuncs/.*funcsrc; do
+        source $funcPath &> /dev/null
+        ffn=$(basename $funcPath) #Function Filename (FFN)
+        if [ $? -ne 0 ]; then
+            echo -e "$TC_ERROR Unable to load "${ffn:1:-2}" module ($funcPath)"
+        else
+            echo -e "$TC_GOOD Loaded "${ffn:1:-2}" module ($funcPath)"
+        fi
     done
 fi
 
@@ -102,7 +115,7 @@ export HISTSIZE=10000
 
 # Add cool stuff to $PATH
 export PATH=/home/vjmes/.local/bin:$PATH
-    
+
 # Standard aliases
 alias rm="rm -i"
 alias cp="cp -i"

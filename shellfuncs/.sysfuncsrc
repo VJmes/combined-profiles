@@ -3,12 +3,12 @@
 #
 #            System functions file
 #
-#           Written: James Varoutsos 
+#           Written: James Varoutsos
 #   Date: 25-Aug-2021        Version: 1.0
 #
 #   1.0 - Initial (Added Zippy)
 #
-# ------------------------------------------------- 
+# -------------------------------------------------
 
 #
 #   Function lister - It lists functions!
@@ -23,7 +23,7 @@ function listSysFuncs {
 function archiveAuto {
     if [ -z "$2" ]; then
         typeLower=$(echo $2 | tr '[:upper:]' '[:lower:]')
-    else       
+    else
         echo "No type given"
         return 1
     fi
@@ -36,7 +36,7 @@ function archiveAuto {
                 tar -jcvf $(basename $1).tar.bz2 $1
                 ;;
             gz|gzip|gz|tgz)
-                tar -zcvf $(basename $1).tar.gz $1  
+                tar -zcvf $(basename $1).tar.gz $1
                 ;;
             tar|tz)
                 tar -cvf $(basename $1).tar.gz $1
@@ -62,7 +62,7 @@ function extractAuto {
                 tar -jcvf $1
                 ;;
             *.gz|*.gzip|*.gz|*.tgz)
-                tar -zxvf $1     
+                tar -zxvf $1
                 ;;
             *.tar|*.tz)
                 tar -xvf $1
@@ -85,7 +85,7 @@ alias reloadEnvironment=". $HOME/.bashrc"
 function updateEnv {
     echo -e "$TC_NOTICE Fetching & reloading entire profile"
     [ -d "$HOME/combined-profiles/" ] && rm -rf "$HOME/combined-profiles/"
-    git clone --quiet --recurse-submodules "https://github.com/VJmes/combined-profiles.git" \
+    git clone --quiet --recurse-submodules "https://github.com/VJmes/dotfiles-funcs-confs.git" \
         && echo -e "$TC_GOOD Combined profile repository successfully fetched"
     find "$HOME/combined-profiles/" \( -name ".git" -o -name ".gitignore" -o -name "README.md" -o -name ".gitmodules" \) -exec rm -rf {} +
     rsync -qav --progress "$HOME/combined-profiles/" "$HOME/" \
@@ -96,5 +96,3 @@ function updateEnv {
 
 alias updateEnvironment="updateEnv"
 alias updateProfile="updateEnv"
-
-echo -e "$TC_GOOD Loaded sysFuncs module ($HOME/.shellfuncs/.sysfuncsrc)"

@@ -39,7 +39,7 @@ PL_SEGMENTS=(
     'user_segment            MyLime      Black'
     #'ssh_segment            MyYellow    Black'
     'screen_session_segment  MyLightGrey Black'
-    'virtual_env_segment     MyBlue      Black'
+    'virtual_env_segment     MyOrange    Black'
     'conda_env_segment       MyBlue      Black'
     'aws_profile_segment     MyLime      Black'
     'kubernetes_segment      MyLime      Black'
@@ -86,6 +86,8 @@ PL_SYMBOLS[git_behind]="↓"
 PL_SYMBOLS[git_modified]="✚ "
 PL_SYMBOLS[git_staged]="✔ "
 PL_SYMBOLS[git_conflicts]="✘ "
+
+PL_SYMBOLS[python]="🐍"
 
 PL_SYMBOLS[read_only]="🔒"
 PL_SYMBOLS[return_code]="🏴"

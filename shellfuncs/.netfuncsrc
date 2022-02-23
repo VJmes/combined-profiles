@@ -97,5 +97,3 @@ function cleanClone {
 }
 
 alias gitClean="cleanClone"
-
-echo -e "$TC_GOOD Loaded netfuncs module ($HOME/.shellfuncs/.netfuncsrc)"
