@@ -128,6 +128,9 @@ alias ghist="history | grep --color=auto"
 alias please="sudo !!"
 alias dsk="df -h -x tmpfs -x devtmpfs"
 
+# Fix for sudo path inconsistency """feature"""
+alias sudo='sudo env PATH=$PATH'
+
 # Systemd aliases
 alias sls="systemctl list-unit-files --type=service"
 alias jsl="journalctl -eo short-iso --no-pager"
