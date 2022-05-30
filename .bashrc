@@ -40,7 +40,7 @@ fi
 function showColors {
     for x in {001..256}; do
         echo -ne "\033[38;5;$x""m(#$x) \\\e[38;5;$x""\e[0m""\033[48;5;$x""m\\\e[48;5;$x""\e[0m ";
-        if ! ((${x##+(0)} % 3)); then echo -e "\e[0m"; fi
+        if ! (((10#$x) % 3)); then echo -e "\e[0m"; fi
     done; echo
 }
 
@@ -105,6 +105,16 @@ function sha3cli { echo -n "$1" | sha512sum | cut -f 1 -d ' '; }
 # Encodables (Dev/null-ing errors because padding characters are hard)
 function b64enc { echo -n "$1" | base64 2> /dev/null; }             # Encode
 function b64dec { echo -n "$1" | base64 -d 2> /dev/null; echo; }    # Decode
+
+# Overwriter
+function ovwr { if [ -f "$1" ]; then rm -rf "$1"; vi -c 'startinsert' "$1"; \
+    echo "Overwritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
+alias overwrite="ovwr"
+
+# Rewriter
+function rewr { if [ -f "$1" ]; then cp -rp "$1" "$1.$(date +'%H%M-%d%m%y').bkup" && rm -rf "$1"; \
+    vi -c 'startinsert' "$1"; echo "Rewritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
+alias rewrite="rewr"
 
 # Bash history set-up
 export HISTFILE="$HOME/.bhistory.log"
