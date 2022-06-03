@@ -4,11 +4,12 @@
 #       James' Excellent Bash Profile
 #
 #           Written: James Varoutsos
-#   Date: 1-Aug-2021        Version: 1.1
+#   Date: 30-May-2022        Version: 1.4
 #
 #   1.1 - Added pureline (bash) into profile
 #   1.2 - Multiple logic fixes
 #   1.3 - Added md5|sha|base64 shortcuts
+#   1.4 - Fixed showColors and Added rewrite/overwrite
 #
 # -------------------------------------------------
 
