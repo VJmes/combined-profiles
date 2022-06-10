@@ -125,7 +125,14 @@ export HISTTIMEFORMAT="%h %d %H:%M:%S -- "
 export HISTSIZE=10000
 
 # Add cool stuff to $PATH
-export PATH=/home/vjmes/.local/bin:$PATH
+if [ -d /usr/scripts ]; then
+    # Adding nix-toolkit portability scripts into $PATH
+    #   ↳ https://github.com/VJmes/nix-toolkit
+    export PATH=/usr/scripts:/home/vjmes/.local/bin:$PATH
+    echo -e "$TC_NOTICE Scripts package detected - Adding /usr/scripts into path"
+else
+    export PATH=/home/vjmes/.local/bin:$PATH
+fi
 
 # Standard aliases
 alias rm="rm -i"
