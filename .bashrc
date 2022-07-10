@@ -51,7 +51,7 @@ if ! [ -d "$HOME/.vim" ]; then
     mkdir $HOME/.vim/{cache,swap}
     echo -e "$TC_NOTICE Created missing .vim directory"
 fi
-command -v vim &> /dev/null && { alias vi="vim -v"; echo -ne "$TC_NOTICE Vim found - Aliasing vi to vim"; }
+command -v vim &> /dev/null && { alias vi="vim -v"; echo -e "$TC_NOTICE Vim found - Aliasing vi to vim"; }
 
 # Check if pureline is cloned anywhere
 if [[ -d "$HOME/pureline" ]]; then
