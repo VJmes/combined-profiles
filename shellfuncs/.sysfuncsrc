@@ -78,6 +78,16 @@ function rewr { if [ -f "$1" ]; then cp -rp "$1" "$1.$(date +'%H%M-%d%m%y').bkup
     vi -c 'startinsert' "$1"; echo "Rewritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
 alias rewrite="rewr"
 
+# File Rotater
+# $1 - Selection direcory :: $2 - Filename to rewrite to
+function fero {
+    if [ -f $2 ]; then
+        rm -rf $2
+    fi
+    cd $1 && { ls -d $1/* | sort -R | tail -n1 | xargs cat > $2; }
+}
+alias rotate="fero"
+
 # Term-friendly hash shortcuts
 function md5cli { echo -n "$1" | md5sum | cut -f 1 -d ' '; }
 function sha1cli { echo -n "$1" | sha1sum | cut -f 1 -d ' '; }
@@ -125,6 +135,7 @@ function .sysfuncsrc-help {
     ${fcPre}updateEnv${fcPost}Update this environment using the latest version from github
     ${fcPre}overwrite [file]${fcPost}Remove current file and open vi(m) with same filename
     ${fcPre}rewrite [file]${fcPost}Take a backup of current file and open vi(m) with the same filename
+    ${fcPre}rotate [path] [file]${fcPost}Take a random file from a directory and rotate it into a filename
     ${fcPre}md5cli [value]${fcPost}Generate an MD5 hash of a given value
     ${fcPre}sha1cli [value]${fcPost}Generate an SHA1 hash of a given value
     ${fcPre}sha2cli [value]${fcPost}Generate an SHA256 hash of a given value
