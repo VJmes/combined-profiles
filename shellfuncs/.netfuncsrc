@@ -12,16 +12,6 @@
 # -------------------------------------------------
 
 #
-#   Function lister - It lists functions!
-#
-function listNetFuncs {
-    echo -e "queryWanIP - queryWanIP\n\tPerforms an external check & returns the external IP address (and PTR)"
-    echo -e "queryLanIP - queryLanIP\n\tFetches the default-route's LAN IP address"
-    echo -e "checkInSubnet - checkInSubnet [IP Address] [Subnet/Mask]\n\tChecks whether an IP address exists within a given subnet"
-    echo -e "cleanClone - gitClean|cleanClone [Git URL]\n\tPerforms a git clone & proceeds to clean-up the included metadata"
-}
-
-#
 #   (Requires Linux) Query's the current default-route's LAN IP address
 #
 alias queryLanIP="ip route get 1.1.1.1 | cut -d ' ' -f 7 | head -1"
@@ -97,3 +87,18 @@ function cleanClone {
 }
 
 alias gitClean="cleanClone"
+
+function .netfuncsrc-help {
+    fcName=".netfuncsrc"
+    fcDescription="[Inbuilt] Provides common networking functions and shortcuts"
+    fcPre="\t\033[1;36m"
+    fcPost="\033[0m: "
+
+    echo -e "\e[38;5;012m${fcName}\033[0m :: \e[38;5;004m${fcDescription}\033[0m
+    ${fcPre}queryLanIP${fcPost}Query the LAN IP by using default route
+    ${fcPre}queryWanIP${fcPost}Query the WAN IP via an external web-absed service
+    ${fcPre}queryBulkDns [filename] [rr-type]${fcPost}Perform a simple bulk-DNS query
+    ${fcPre}checkInSubnet [ip-addr] [subnet]${fcPost}Check whether an IP address falls within a given subnet range
+    ${fcPre}cleanClone [git-url]${fcPost}Performs a local
+    "
+}

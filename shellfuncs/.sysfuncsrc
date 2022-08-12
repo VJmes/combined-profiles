@@ -10,16 +10,6 @@
 #
 # -------------------------------------------------
 
-#
-#   Function lister - It lists functions!
-#
-function listSysFuncs {
-    echo -e "zp - zp|zippy [file/dir] [type]\n\tAuto-generates an archive of a given directory"
-    echo -e "unzp - unzp|unzippy [file/dir]\n\tDetects the type, them performs an extraction of a given archive"
-    echo -e "updateEnv - updateEnv|updateProfile\n\tPulls the latest updates for this profile & reloads it"
-    echo -e "reloadEnv - reloadEnv|reloadProfile\n\tReloads the profile"
-}
-
 function archiveAuto {
     if [ -z "$2" ]; then
         typeLower=$(echo $2 | tr '[:upper:]' '[:lower:]')
@@ -78,6 +68,26 @@ function extractAuto {
 alias unzp="extractAuto"
 alias unzippy="extractAuto"
 
+# Overwriter
+function ovwr { if [ -f "$1" ]; then rm -rf "$1"; vi -c 'startinsert' "$1"; \
+    echo "Overwritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
+alias overwrite="ovwr"
+
+# Rewriter
+function rewr { if [ -f "$1" ]; then cp -rp "$1" "$1.$(date +'%H%M-%d%m%y').bkup" && rm -rf "$1"; \
+    vi -c 'startinsert' "$1"; echo "Rewritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
+alias rewrite="rewr"
+
+# Term-friendly hash shortcuts
+function md5cli { echo -n "$1" | md5sum | cut -f 1 -d ' '; }
+function sha1cli { echo -n "$1" | sha1sum | cut -f 1 -d ' '; }
+function sha2cli { echo -n "$1" | sha256sum | cut -f 1 -d ' '; }
+function sha3cli { echo -n "$1" | sha512sum | cut -f 1 -d ' '; }
+
+# Encodables (Dev/null-ing errors because padding characters are hard)
+function b64enc { echo -n "$1" | base64 2> /dev/null; }             # Encode
+function b64dec { echo -n "$1" | base64 -d 2> /dev/null; echo; }    # Decode
+
 alias reloadEnv=". $HOME/.bashrc"
 alias reloadProfile=". $HOME/.bashrc"
 alias reloadEnvironment=". $HOME/.bashrc"
@@ -101,3 +111,25 @@ alias updateProfile="updateEnv"
 alias fetchEnvironment="updateEnv"
 alias fetchProfile="updateEnv"
 alias fetechEnv="updateEnv"
+
+function .sysfuncsrc-help {
+    fcName=".sysfuncsrc"
+    fcDescription="[Inbuilt] Provides common system functions and shortcuts"
+    fcPre="\t\033[1;36m"
+    fcPost="\033[0m: "
+
+    echo -e "\e[38;5;012m${fcName}\033[0m :: \e[38;5;004m${fcDescription}\033[0m
+    ${fcPre}archiveAuto [directory] [zip-type]${fcPost}Tar macro, compress directory with common-compression-types
+    ${fcPre}extractAuto [directory] [zip-type]${fcPost}Extract directory with common-compression-types
+    ${fcPre}reloadEnv${fcPost}Reload this environment
+    ${fcPre}updateEnv${fcPost}Update this environment using the latest version from github
+    ${fcPre}overwrite [file]${fcPost}Remove current file and open vi(m) with same filename
+    ${fcPre}rewrite [file]${fcPost}Take a backup of current file and open vi(m) with the same filename
+    ${fcPre}md5cli [value]${fcPost}Generate an MD5 hash of a given value
+    ${fcPre}sha1cli [value]${fcPost}Generate an SHA1 hash of a given value
+    ${fcPre}sha2cli [value]${fcPost}Generate an SHA256 hash of a given value
+    ${fcPre}sha3cli [value]${fcPost}Generate an SHA512 hash of a given value
+    ${fcPre}b64enc [value]${fcPost}Base64 encode a given value
+    ${fcPre}b64dec [value]${fcPost}Base64 decode a given value
+    "
+}
