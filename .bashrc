@@ -51,7 +51,9 @@ if ! [ -d "$HOME/.vim" ]; then
     mkdir $HOME/.vim/{cache,swap}
     echo -e "$TC_NOTICE Created missing .vim directory"
 fi
-command -v vim &> /dev/null && { alias vi="vim -v"; echo -e "$TC_NOTICE Vim found - Aliasing vi to vim"; }
+command -v vim &> /dev/null && { alias vi="vim -vc 'startinsert'"; echo -e "$TC_NOTICE Aliasing vi to vim"; }
+alias vim="vim -vc 'startinsert'"
+alias vimp="vim -vc 'startinsert' -c 'set paste'"
 
 # Check if pureline is cloned anywhere
 if [[ -d "$HOME/pureline" ]]; then
@@ -97,6 +99,11 @@ if [ -d ~/shellfuncs ]; then
             echo -e "$TC_GOOD Loaded "${ffn:1:-2}" module ($funcPath)"
         fi
     done
+fi
+
+if [ ! -f ~/.secrets ]; then
+    echo -e "$TC_NOTICE No secrets file found - Creating one"
+    touch ~/.secrets && chmod 600 ~/.secrets
 fi
 
 # Bash history set-up
@@ -152,7 +159,11 @@ function funcsHelp {
     done <<< $( compgen -A function | grep "\..*funcsrc\-help" )
 }
 alias helpy="funcsHelp"
+# Lmao
+alias um="funcsHelp"
 alias umm="funcsHelp"
+alias uh="funcsHelp"
+alias uhh="funcsHelp"
 
 
 echo -e "$TC_GOOD Profile loaded successfully\n"

@@ -1,0 +1,54 @@
+#!/bin/bash
+# -------------------------------------------------
+#
+#            Security functions file
+#
+#           Written: James Varoutsos
+#   Date: 14-Dec-2022        Version: 1.0
+#
+#   1.0 - Initial refactor
+#
+# -------------------------------------------------
+
+function generateKey {
+    [ -z ${1+x} ] && { echo -e "${er}No keyfile name provided"; return 1; }
+    ssh-keygen -qt ed25519 -f ~/.ssh/"$1" || { echo -e "${er} Unable to generate key"; return 1; }
+    cat ~/.ssh/"$1".pub >> ~/.ssh/authorized_keys && \
+        echo -e "${nt} Save the private key for later use:\n$(cat ~/.ssh/$1)"
+}
+
+function addKey {
+    [ -z ${1+x} ] && { echo -e "${er}No keyfile name provided"; return 1; }
+    vim -vc 'startinsert' -c 'set paste' ~/.ssh/$1 && chmod 600 ~/.ssh/$1
+}
+
+function delKey {
+    [ -z ${1+x} ] && { echo -e "${er}No keyname provided"; return 1; }
+    sed '/^${1}/d' ~/.ssh/authorized_keys &> /dev/null && \
+        find ~/.ssh -type f -name "${1}" -name "${1}.*" -delete
+    [ $? ] && { echo -e "${gd}Key '${1}' removed successfully"; }
+}
+
+function loadSecrets {
+    if [ -f ~/.secrets ]; then
+        expr $(stat -c '%a' ~/.secrets) != 600 &> /dev/null && \
+            { echo -e "${er} Bad permissions for .secrets - Skipping"; return 1; }
+        source ~/.secrets && echo -e "${gd} Loaded .secrets from file"
+    fi
+}
+
+function .secfuncsrc-help {
+    fcName=".secfuncsrc"
+    fcDescription="[Inbuilt] Provides common security functions"
+    fcPre="\t\033[1;36m"
+    fcPost="\033[0m: "
+
+    echo -e "\e[38;5;012m${fcName}\033[0m :: \e[38;5;004m${fcDescription}\033[0m
+    ${fcPre}generateKey [filename] ${fcPost}Generates a new authorized SSH key
+    ${fcPre}addKey [filename] ${fcPost}Import a private key for passwordless SSH to remote hosts
+    ${fcPre}delKey [pattern] ${fcPost}Removes all SSH keys + clears known_hosts file matching a pattern
+    ${fcPre}loadSecrets ${fcPost}Loads all variable information from properly permissioned .secrets file
+    "
+}
+
+loadSecrets # Run automatically on initialization

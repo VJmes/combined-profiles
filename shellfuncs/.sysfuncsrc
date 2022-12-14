@@ -69,13 +69,13 @@ alias unzp="extractAuto"
 alias unzippy="extractAuto"
 
 # Overwriter
-function ovwr { if [ -f "$1" ]; then rm -rf "$1"; vi -c 'startinsert' "$1"; \
+function ovwr { if [ -f "$1" ]; then rm -rf "$1"; vi -c 'startinsert' -c 'set paste' "$1"; \
     echo "Overwritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
 alias overwrite="ovwr"
 
 # Rewriter
 function rewr { if [ -f "$1" ]; then cp -rp "$1" "$1.$(date +'%H%M-%d%m%y').bkup" && rm -rf "$1"; \
-    vi -c 'startinsert' "$1"; echo "Rewritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
+    vi -c 'startinsert' -c 'set paste' "$1"; echo "Rewritten '$1'"; else echo "Nonexistant file '$1'"; fi; }
 alias rewrite="rewr"
 
 # File Rotater
