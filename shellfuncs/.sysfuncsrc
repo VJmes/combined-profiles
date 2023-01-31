@@ -103,7 +103,7 @@ alias reloadProfile=". $HOME/.bashrc"
 alias reloadEnvironment=". $HOME/.bashrc"
 
 function updateEnv {
-    projName="dotfiles-funcs-confs"
+    projName="nix-dotfiles"
     echo -e "$TC_NOTICE Fetching & reloading entire profile"
     [ -d "$HOME/${projName}/" ] && rm -rf "$HOME/${projName}/"
     git clone --quiet --recurse-submodules "https://github.com/VJmes/${projName}.git" \
@@ -112,7 +112,7 @@ function updateEnv {
     rsync -qav --progress "$HOME/${projName}/" "$HOME/" \
         && echo -e "$TC_GOOD Profile refreshed"
     sleep 2
-    reloadEnv
+    rm -rf "$HOME/${projName}/" && reloadEnv
 }
 
 alias updateEnvironment="updateEnv"

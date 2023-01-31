@@ -24,11 +24,12 @@ TC_GOOD='\033[1;32m[GOOD]\033[0m'	    # Green Good
 TC_NOTICE='\033[1;36m[NOTICE]\033[0m'	# Notice Blue
 TC_ALERT='\033[1;35m[NOTICE]\033[0m'	# Alert Purple
 
-# Set pre-program aliases
-if [ -f /usr/bin/python3.9 ]; then
-    alias python="python3.9"
-    alias pip="pip3.9"
-    alias py="python3.9"
+# Setting python specific options
+pyVer="3.10"
+if [ -f /usr/bin/python${pyVer} ]; then
+    alias python="python${pyVer}"
+    alias pip="python${pyVer}"
+    alias py="python${pyVer}"
 elif [ -f /usr/bin/python3 ]; then  #Fallback
     echo -ne "$TC_WARN Loading non-optimal python version"
     echo -e " (\033[1;36m$(/usr/bin/python3 -V | cut -d ' ' -f 2)\033[0m)"
@@ -106,12 +107,20 @@ if [ ! -f ~/.secrets ]; then
     touch ~/.secrets && chmod 600 ~/.secrets
 fi
 
+# Bash history append
+shopt -s histappend
+
 # Bash history set-up
 export HISTFILE="$HOME/.bhistory.log"
 export HISTCONTROL=ignorespace:erasedups
 export HISTIGNORE="history:pwd"
 export HISTTIMEFORMAT="%h %d %H:%M:%S -- "
 export HISTSIZE=10000
+
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# Removing .lesshst
+export LESSHISTFILE=-
 
 # Add cool stuff to $PATH
 if [ -d /usr/scripts ]; then
