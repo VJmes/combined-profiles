@@ -16,6 +16,9 @@
 unset PS1           # To enable safe-swapping between shells
 unset PURE_PATH     # Fixes edge-case where pureline dir gets scrubbed
 
+# Kill the below if noninteractive
+[[ $- == *i* ]] || return
+
 # Handy terminal output macros
 TC_RESET='\033[0m'	    # Reset Color
 TC_ERROR='\033[1;31m[ERROR]\033[0m'	    # Error Red
