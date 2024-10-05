@@ -4,3 +4,6 @@
 [submodule "pureline"]
 	path = pureline
 	url = https://github.com/chris-marsh/pureline
+[submodule ".tmux.d/plugins/tpm"]
+	path = .tmux.d/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
